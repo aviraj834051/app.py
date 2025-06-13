@@ -1,36 +1,40 @@
-from flask import Flask, render_template, request, redirect, session, flash
-from token_extractor import get_token_from_cookies
+from flask import Flask, render_template, request, redirect, session
+from token_extractor import extract_token_from_cookie
 
 app = Flask(__name__)
-app.secret_key = "avii_secret_key"
+app.secret_key = 'secret_key_aviiraj'  # Secret key for session
+
 USERNAME = "aviirajj8340"
 PASSWORD = "avirajraj"
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/')
 def login():
-    if request.method == "POST":
-        if request.form["username"] == USERNAME and request.form["password"] == PASSWORD:
-            session["user"] = USERNAME
-            return redirect("/dashboard")
-        else:
-            flash("Galat Username ya Password!", "error")
     return render_template("login.html")
 
-@app.route("/dashboard", methods=["GET", "POST"])
-def dashboard():
-    if "user" not in session:
-        return redirect("/")
-    
-    token = None
-    if request.method == "POST":
-        cookies = request.form["cookies"]
-        token = get_token_from_cookies(cookies)
-    return render_template("home.html", token=token)
+@app.route('/login', methods=['POST'])
+def do_login():
+    username = request.form['username']
+    password = request.form['password']
+    if username == USERNAME and password == PASSWORD:
+        session['user'] = username
+        return redirect('/cookie')
+    else:
+        return "Incorrect username or password!"
 
-@app.route("/logout")
-def logout():
-    session.clear()
-    return redirect("/")
+@app.route('/cookie')
+def cookie():
+    if 'user' in session:
+        return render_template("cookie_input.html")
+    else:
+        return redirect('/')
+
+@app.route('/home', methods=['POST'])
+def home():
+    if 'user' not in session:
+        return redirect('/')
+    cookie = request.form['cookie']
+    token = extract_token_from_cookie(cookie)
+    return render_template("home.html", token=token)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5000)
