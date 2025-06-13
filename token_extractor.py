@@ -1,19 +1,20 @@
 import requests
 import re
 
-def get_token_from_cookies(cookie_str):
+def extract_token_from_cookie(cookie_str):
     headers = {
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 10)',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Cookie': cookie_str
+        "User-Agent": "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Cookie": cookie_str,
     }
 
+    session = requests.Session()
     try:
-        res = requests.get("https://business.facebook.com/business_locations", headers=headers)
-        access_token = re.search(r'EAAG\w+', res.text)
-        if access_token:
-            return access_token.group(0)
+        response = session.get("https://business.facebook.com/business_locations", headers=headers)
+        token = re.search(r'EAAG\w+', response.text)
+        if token:
+            return token.group(0)
         else:
-            return "❌ Token nahi nikla. Cookie check karo!"
+            return None
     except Exception as e:
-        return f"⚠️ Error: {str(e)}"
+        return None
