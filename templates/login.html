@@ -1,63 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Avii Token Tool</title>
+  <title>Avii Raj Token Tool</title>
   <style>
     body {
-      background-color: black;
-      font-family: 'Segoe UI', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      background: black;
       color: white;
-    }
-    h1 {
-      font-size: 2rem;
-      animation: glow 2s ease-in-out infinite alternate;
-    }
-    @keyframes glow {
-      from { color: #00f; text-shadow: 0 0 5px #00f, 0 0 10px #0ff; }
-      to { color: #f00; text-shadow: 0 0 10px #f00, 0 0 20px #f0f; }
+      text-align: center;
+      font-family: monospace;
     }
     input, button {
-      padding: 12px;
+      padding: 10px;
       margin: 10px;
-      border: none;
       border-radius: 10px;
-      width: 80%;
-      max-width: 300px;
-      font-size: 1rem;
-    }
-    input {
-      background: #222;
-      color: #fff;
-      box-shadow: 0 0 10px #0ff;
-    }
-    button {
-      background: #ff0080;
-      color: white;
+      border: none;
+      font-size: 18px;
+      background: linear-gradient(to right, #00f, #f00, #0f0);
+      color: black;
       font-weight: bold;
-      box-shadow: 0 0 15px #ff0080;
-      cursor: pointer;
     }
-    .credit {
-      margin-top: 20px;
-      font-size: 0.8rem;
-      color: #aaa;
+    h1 {
+      font-size: 36px;
+      margin-top: 50px;
+    }
+    span {
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0.6; }
+      100% { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <h1>AVII Token Panel</h1>
-  <form action="/login" method="post">
+  <h1><span style="color:#00f;">Avii</span> <span style="color:#f00;">Raj</span> Token Tool</h1>
+  <p>🔐 pura padhne</p>
+  <form method="POST">
     <input type="text" name="username" placeholder="Username" required><br>
     <input type="password" name="password" placeholder="Password" required><br>
     <button type="submit">Login</button>
   </form>
-  <div class="credit">Owner: Avii 💙❤️</div>
 </body>
 </html>
