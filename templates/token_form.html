@@ -1,13 +1,77 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Token Extractor</title>
+  <meta charset="UTF-8">
+  <title>Avii Token Extractor</title>
+  <style>
+    body {
+      background: #000;
+      color: #00ffcc;
+      font-family: monospace;
+      text-align: center;
+      padding-top: 50px;
+    }
+    textarea, button {
+      padding: 10px;
+      width: 90%;
+      max-width: 600px;
+      border: 2px solid #00ffcc;
+      background-color: #111;
+      color: #00ffcc;
+      font-size: 16px;
+      border-radius: 10px;
+    }
+    button {
+      margin-top: 10px;
+      background-color: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background-color: #00ffee;
+      transform: scale(1.03);
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background: #111;
+      border: 2px dashed #00ffcc;
+      border-radius: 10px;
+      color: #00ffcc;
+      word-wrap: break-word;
+      width: 90%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .owner {
+      margin-top: 30px;
+      color: red;
+      font-weight: bold;
+      animation: glow 1s infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px red; }
+      to   { text-shadow: 0 0 20px red; }
+    }
+  </style>
 </head>
-<body style="background:black; color:white; font-family:sans-serif; text-align:center;">
-    <h2>🔥 Facebook Cookie to Token Extractor 🔥</h2>
-    <form action="/get_token" method="post">
-        <textarea name="cookie" rows="8" cols="60" placeholder="Yaha Facebook Cookie paste karo"></textarea><br><br>
-        <button type="submit">🚀 Token Nikalo</button>
-    </form>
+<body>
+  <h1>Facebook Cookie ➜ Token Extractor</h1>
+  <form method="POST">
+    <textarea name="cookies" placeholder="Paste your Facebook cookies here..." rows="5" required>{{ request.form.cookies }}</textarea><br>
+    <button type="submit">🎯 Get Token</button>
+  </form>
+
+  {% if token %}
+    <div class="result">
+      <strong>✅ Token Extracted:</strong><br><br>
+      {{ token }}
+    </div>
+  {% endif %}
+
+  <div class="owner">👑 Owner: Avii 👑</div>
 </body>
 </html>
