@@ -28,18 +28,12 @@ def login():
 
 @app.route('/tool', methods=['GET', 'POST'])
 def tool():
-    token = None
+    token = ''
+    cookie = ''
     if request.method == 'POST':
         cookie = request.form.get('cookie')
         token = extract_token(cookie)
-    return f"""
-    <h2 style='color:white;'>🛠️ Facebook EAAD Token Extractor</h2>
-    <form method='POST'>
-        <textarea name='cookie' rows='6' cols='70' placeholder='Paste your FB cookies here' required></textarea><br><br>
-        <button type='submit'>🔍 Extract Token</button>
-    </form><br>
-    {'<b style="color:lime;">Token:<br>' + token + '</b>' if token else ''}
-    """
+    return render_template('tool.html', token=token, cookie=cookie)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
