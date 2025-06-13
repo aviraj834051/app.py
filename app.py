@@ -1,15 +1,15 @@
 from flask import Flask, render_template, request, redirect, session
-from token_extractor import extract_token_from_cookie
+from token_extractor import extract_token
 
 app = Flask(__name__)
-app.secret_key = 'secret_key_aviiraj'  # Secret key for session
+app.secret_key = "secret_key_aviiraj"
 
 USERNAME = "aviirajj8340"
 PASSWORD = "avirajraj"
 
 @app.route('/')
-def login():
-    return render_template("login.html")
+def index():
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def do_login():
@@ -22,19 +22,18 @@ def do_login():
         return "Incorrect username or password!"
 
 @app.route('/cookie')
-def cookie():
-    if 'user' in session:
-        return render_template("cookie_input.html")
-    else:
-        return redirect('/')
-
-@app.route('/home', methods=['POST'])
-def home():
+def cookie_page():
     if 'user' not in session:
         return redirect('/')
-    cookie = request.form['cookie']
-    token = extract_token_from_cookie(cookie)
-    return render_template("home.html", token=token)
+    return render_template('home.html')
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+@app.route('/generate_token', methods=['POST'])
+def generate_token():
+    if 'user' not in session:
+        return redirect('/')
+    cookies = request.form['cookies']
+    token = extract_token(cookies)
+    return render_template('home.html', token=token)
+
+if __name__ == '__main__':
+    app.run(port=5000)
