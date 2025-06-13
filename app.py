@@ -1,37 +1,29 @@
-from flask import Flask, render_template, request, redirect, session
-from token_extractor import extract_token
-import os
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
-app.secret_key = "avii_secure_key"
 
-USERNAME = "aviirajj8340"
-PASSWORD = "avirajraj"
-
-@app.route('/', methods=['GET', 'POST'])
-def login():
-    if request.method == 'POST':
-        uname = request.form['username']
-        passwd = request.form['password']
-        if uname == USERNAME and passwd == PASSWORD:
-            session['logged_in'] = True
-            return redirect('/token')
-        else:
-            return "Incorrect credentials", 403
-    return render_template("login.html")
-
-@app.route('/token', methods=['GET', 'POST'])
-def token_page():
-    if not session.get('logged_in'):
-        return redirect('/')
-    if request.method == 'POST':
-        cookie = request.form['cookie']
-        try:
-            token = extract_token(cookie)
-            return f"<h3 style='color:lime;'>✅ Extracted Token:</h3><textarea rows=6 cols=90>{token}</textarea>"
-        except Exception as e:
-            return f"<h3 style='color:red;'>❌ Error:</h3> {str(e)}"
+@app.route('/')
+def home():
     return render_template("token_form.html")
 
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+@app.route('/get_token', methods=['POST'])
+def get_token():
+    cookie = request.form.get('cookie')
+
+    # Dummy logic: Check if cookie is valid format
+    if "c_user=" in cookie and "xs=" in cookie:
+        # In real project, yahan Facebook token extraction logic lagana hai
+        token = "EAABwzLixnjYBA-FakeTokenExample..."  # Replace with real logic
+        return f"""
+        <h2 style='color:lime;'>✅ Token mil gaya!</h2>
+        <textarea rows='4' cols='50'>{token}</textarea><br><br>
+        <a href='/'>🔙 Wapas jao</a>
+        """
+    else:
+        return """
+        <h2 style='color:red;'>❌ Invalid Cookie Format</h2>
+        <a href='/'>🔙 Try Again</a>
+        """
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
