@@ -1,88 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Avii Token Tool</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      background: black;
+      background-color: black;
       font-family: 'Segoe UI', sans-serif;
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
       flex-direction: column;
-      overflow: hidden;
-    }
-    .login-box {
-      border: 2px solid #0ff;
-      border-radius: 20px;
-      padding: 30px;
-      width: 90%;
-      max-width: 400px;
-      background: rgba(255, 255, 255, 0.05);
-      box-shadow: 0 0 25px cyan;
-    }
-    input {
-      width: 100%;
-      margin: 10px 0;
-      padding: 10px;
-      border: none;
-      outline: none;
-      background: black;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       color: white;
-      border-bottom: 2px solid #00f0ff;
-      font-size: 16px;
     }
-    button {
-      width: 100%;
-      padding: 10px;
-      background: linear-gradient(45deg, #0ff, #f0f, #0f0, #ff0, #00f, #f00);
-      border: none;
-      color: black;
-      font-weight: bold;
-      font-size: 18px;
-      cursor: pointer;
-      border-radius: 10px;
-    }
-    h2 {
-      text-align: center;
-      color: #0ff;
-      margin-bottom: 20px;
-      animation: glow 2s infinite ease-in-out;
+    h1 {
+      font-size: 2rem;
+      animation: glow 2s ease-in-out infinite alternate;
     }
     @keyframes glow {
-      0% { color: #0ff; text-shadow: 0 0 5px #0ff; }
-      50% { color: #f0f; text-shadow: 0 0 20px #f0f; }
-      100% { color: #0ff; text-shadow: 0 0 5px #0ff; }
+      from { color: #00f; text-shadow: 0 0 5px #00f, 0 0 10px #0ff; }
+      to { color: #f00; text-shadow: 0 0 10px #f00, 0 0 20px #f0f; }
     }
-    .owner {
+    input, button {
+      padding: 12px;
+      margin: 10px;
+      border: none;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 300px;
+      font-size: 1rem;
+    }
+    input {
+      background: #222;
+      color: #fff;
+      box-shadow: 0 0 10px #0ff;
+    }
+    button {
+      background: #ff0080;
       color: white;
-      font-size: 14px;
-      text-align: center;
-      margin-top: 10px;
+      font-weight: bold;
+      box-shadow: 0 0 15px #ff0080;
+      cursor: pointer;
+    }
+    .credit {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      color: #aaa;
     }
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Login - Token Tool</h2>
-    <form method="POST">
-      <input type="text" name="username" placeholder="Username" required />
-      <input type="password" name="password" placeholder="Password" required />
-      <button type="submit">Login</button>
-    </form>
-    <div class="owner">Owner: <span style="color:#f0f">Avii</span></div>
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-          {% for message in messages %}
-            <li style="color:red">{{ message }}</li>
-          {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
-  </div>
+  <h1>AVII Token Panel</h1>
+  <form action="/login" method="post">
+    <input type="text" name="username" placeholder="Username" required><br>
+    <input type="password" name="password" placeholder="Password" required><br>
+    <button type="submit">Login</button>
+  </form>
+  <div class="credit">Owner: Avii 💙❤️</div>
 </body>
 </html>
