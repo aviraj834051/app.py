@@ -1,24 +1,21 @@
-import re
 import requests
+import re
 
-def extract_token(cookies):
-    try:
-        headers = {
-            "User-Agent": "Mozilla/5.0 (Linux; Android 10)",
-            "Content-Type": "application/x-www-form-urlencoded",
-        }
+def extract_token(cookies_string):
+    cookies = {}
+    for item in cookies_string.split(";"):
+        key, value = item.strip().split("=", 1)
+        cookies[key] = value
 
-        jar = requests.cookies.RequestsCookieJar()
-        cookie_parts = cookies.split(';')
-        for part in cookie_parts:
-            key, value = part.strip().split('=', 1)
-            jar.set(key, value, domain=".facebook.com")
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Linux; Android 10)",
+        "Accept-Language": "en-US,en;q=0.9"
+    }
 
-        response = requests.get("https://business.facebook.com/business_locations", headers=headers, cookies=jar)
-        match = re.search(r'EAAG\w+', response.text)
-        if match:
-            return match.group(0)
-        else:
-            return "❌ Failed to extract Token. Use latest cookies from m.facebook.com or Android App."
-    except Exception as e:
-        return f"Error: {str(e)}"
+    response = requests.get("https://business.facebook.com/business_locations", headers=headers, cookies=cookies)
+    access_token = re.search(r'EAAG\w+', response.text)
+
+    if access_token:
+        return access_token.group(0)
+    else:
+        raise Exception("Valid group-messaging token not found. Check your Facebook account settings.")
