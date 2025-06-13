@@ -1,22 +1,20 @@
 from flask import Flask, render_template, request
 from token_extractor import get_token_from_cookies
+import os
 
 app = Flask(__name__)
 
-@app.route("/", methods=["GET", "POST"])
-def home():
-    eaab_token = ""
-    eaad_token = ""
-    if request.method == "POST":
-        cookies = request.form["cookies"]
-        token = get_token_from_cookies(cookies)
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    token = None
+    cookies_text = ""
+    
+    if request.method == 'POST':
+        cookies_text = request.form.get('cookies', '')
+        token = get_token_from_cookies(cookies_text)
 
-        if token.startswith("EAAD"):
-            eaad_token = token
-        elif token.startswith("EAAB"):
-            eaab_token = token
+    return render_template('token_form.html', token=token, request=request)
 
-    return render_template("home.html", eaad_token=eaad_token, eaab_token=eaab_token)
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
